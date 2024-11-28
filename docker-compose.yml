@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  orderdb:
+    image: mongo:8.0.3
+    restart: always
+    container_name: order-db
+    ports:
+      - '${MONGODB_PORT}:27017'
+    volumes:
+      - mongo-data:/data/db    
+    env_file:
+      - .env
+    networks:
+      - default
+
+  orderapi:
+    build:
+      context: .      
+    container_name: order-api
+    ports:
+      - '${HTTP_PORT}:3000'
+    env_file:
+      - .env
+    depends_on:
+      - orderdb
+    networks:
+      - default
+
+volumes:
+  mongo-data:
+
+networks:
+  default:
+    driver: bridge
