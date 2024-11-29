@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -29,7 +30,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(GLOBAL_API_PREFIX);
   app.useLogger(app.get(Logger));
-  //app.useGlobalPipes(new ValidationPipe({}));
+  app.useGlobalPipes(new ValidationPipe({}));
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(`${GLOBAL_API_PREFIX}/api-docs`, app, document);
