@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { SwaggerModule } from '@nestjs/swagger';
+import {
+  ExpressAdapter,
+  NestExpressApplication,
+} from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { validateEnvVariables } from './shared/config/utils/validate-env-vars.util';
 import {
@@ -16,9 +16,9 @@ import {
 import { swaggerConfig } from './shared/config/utils/swagger-config.util';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
+  const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new ExpressAdapter(),
     { bufferLogs: true },
   );
 

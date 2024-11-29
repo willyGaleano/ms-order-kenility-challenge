@@ -5,6 +5,7 @@ import {
   nodeEnvValues,
 } from './app.constant';
 import { MongoDBEnvVars } from '../../db/clients/mongo/models/constants/env-vars.constant';
+import { AWSEnvVars } from '../../file/providers/aws/models/constants/env-vars.constant';
 
 export const CommonEnvVars = z
   .object({
@@ -17,6 +18,6 @@ export const CommonEnvVars = z
   })
   .describe('CommonEnvVars');
 
-export const EnvironmentVariables = CommonEnvVars.merge(
-  MongoDBEnvVars,
-).describe('EnvironmentVariables');
+export const EnvironmentVariables = CommonEnvVars.merge(MongoDBEnvVars)
+  .merge(AWSEnvVars)
+  .describe('EnvironmentVariables');
