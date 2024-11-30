@@ -5,11 +5,13 @@ import {
   Param,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOperation,
@@ -41,8 +43,11 @@ import {
 import { MapResponseInterceptor } from '../../../shared/interceptors/map-response.interceptor';
 import { ProductControllerMapper } from '../mappers/product-controller.mapper';
 import { ProductDetailResponse } from '../models/dtos/detail-product.dto';
+import { JwtAuthGuard } from '../../auth/guards/jwt.auth.guard';
 
 @ApiTags('Product')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('product')
 export class ProductController {
   constructor(

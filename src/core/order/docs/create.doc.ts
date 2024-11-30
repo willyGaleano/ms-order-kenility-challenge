@@ -4,8 +4,6 @@ import {
   CreateOrderResponse,
 } from '../models/dtos/create-order.dto';
 
-export const CREATE_ORDER_TAGS = 'Order';
-
 export const CREATE_ORDER_OPERATION = {
   summary: 'Create a new order',
 };

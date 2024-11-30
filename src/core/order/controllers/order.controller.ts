@@ -5,10 +5,12 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOperation,
@@ -54,8 +56,11 @@ import {
   LAST_MONTH_SALE_OPERATION,
   LAST_MONTH_SALE_RESPONSE_SUCCESS,
 } from '../docs/last-month-sale';
+import { JwtAuthGuard } from '../../auth/guards/jwt.auth.guard';
 
 @ApiTags('Order')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('order')
 export class OrderController {
   constructor(

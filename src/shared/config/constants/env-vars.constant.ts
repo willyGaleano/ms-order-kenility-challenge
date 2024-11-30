@@ -7,6 +7,7 @@ import {
 import { MongoDBEnvVars } from '../../db/clients/mongo/models/constants/env-vars.constant';
 import { AWSEnvVars } from '../../file/providers/aws/models/constants/env-vars.constant';
 import { ProductEnvVars } from '../../../core/product/constants/env-vars.constant';
+import { AuthEnvVars } from '../../../core/auth/constants/env-vars.constant';
 
 export const CommonEnvVars = z
   .object({
@@ -22,4 +23,5 @@ export const CommonEnvVars = z
 export const EnvironmentVariables = CommonEnvVars.merge(MongoDBEnvVars)
   .merge(AWSEnvVars)
   .merge(ProductEnvVars)
+  .merge(AuthEnvVars)
   .describe('EnvironmentVariables');
