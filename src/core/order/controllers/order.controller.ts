@@ -19,9 +19,10 @@ export class OrderController {
     @Body() body: CreateOrderCommand,
   ): Promise<ControllerResponse<{ orderId: string }>> {
     const { customerName, products } = body;
-    return await this.commandBus.execute(
+    const orderId = await this.commandBus.execute<CreateOrderCommand, string>(
       new CreateOrderCommand(customerName, products),
     );
+    return { data: { orderId } };
   }
 
   @Put()

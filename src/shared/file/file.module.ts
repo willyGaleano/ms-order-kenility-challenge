@@ -12,6 +12,6 @@ import { UploadFileService } from './services/upload-file.service';
     },
     UploadFileService,
   ],
-  exports: [UPLOAD_FILE_SERVICE],
+  exports: [UPLOAD_FILE_SERVICE, UploadFileService],
 })
 export class FileModule {}

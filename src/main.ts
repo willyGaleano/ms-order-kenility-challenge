@@ -30,7 +30,13 @@ async function bootstrap() {
 
   app.setGlobalPrefix(GLOBAL_API_PREFIX);
   app.useLogger(app.get(Logger));
-  app.useGlobalPipes(new ValidationPipe({}));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(`${GLOBAL_API_PREFIX}/api-docs`, app, document);

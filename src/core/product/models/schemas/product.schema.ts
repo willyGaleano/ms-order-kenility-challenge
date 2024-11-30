@@ -3,12 +3,11 @@ import { Document, Model } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Product {
-  @Prop({ required: true, index: true, maxlength: 100 })
+  @Prop({ required: true, unique: true, maxlength: 100 })
   name: string;
 
   @Prop({
     required: true,
-    unique: true,
     maxlength: 50,
     uppercase: true,
     trim: true,
