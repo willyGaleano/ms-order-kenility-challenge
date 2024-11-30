@@ -2,8 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   ArrayMinSize,
   IsArray,
-  IsDecimal,
   IsNotEmpty,
+  IsNumber,
   IsPositive,
   IsString,
   MaxLength,
@@ -26,9 +26,8 @@ export class ProductCreateOrder {
     description: 'The price of the product',
     example: 100.0,
   })
-  @IsDecimal()
+  @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   price: number;
 }
 

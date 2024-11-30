@@ -23,6 +23,13 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
+    const exceptionBody = exception.getResponse();
+    this.logger.debug({
+      msg: 'Handling exception',
+      data: {
+        exceptionBody,
+      },
+    });
 
     const status =
       exception instanceof HttpException
