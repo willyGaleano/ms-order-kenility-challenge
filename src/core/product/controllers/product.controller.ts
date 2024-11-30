@@ -31,7 +31,6 @@ import {
   CREATE_PRODUCT_OPERATION,
   CREATE_PRODUCT_RESPONSE_ERROR,
   CREATE_PRODUCT_RESPONSE_SUCCESS,
-  CREATE_PRODUCT_TAGS,
 } from '../docs/create.doc';
 import {
   DETAIL_OPERATION,
@@ -43,7 +42,7 @@ import { MapResponseInterceptor } from '../../../shared/interceptors/map-respons
 import { ProductControllerMapper } from '../mappers/product-controller.mapper';
 import { ProductDetailResponse } from '../models/dtos/detail-product.dto';
 
-@ApiTags(CREATE_PRODUCT_TAGS)
+@ApiTags('Product')
 @Controller('product')
 export class ProductController {
   constructor(
@@ -57,18 +56,18 @@ export class ProductController {
   @ApiBody(CREATE_PRODUCT_BODY)
   @ApiResponse(CREATE_PRODUCT_RESPONSE_SUCCESS)
   @ApiResponse(CREATE_PRODUCT_RESPONSE_ERROR)
-  @UseInterceptors(FileInterceptor('file', multerImageOptions))
+  @UseInterceptors(FileInterceptor('image', multerImageOptions))
   @UseInterceptors(
     new MapResponseInterceptor(ProductControllerMapper.toCreateResponse),
   )
   async create(
-    @UploadedFile() file: FileToUpload,
+    @UploadedFile() image: FileToUpload,
     @Body() body: CreateProductRequest,
   ): Promise<CreateProductResponse> {
     const { name, price, sku } = body;
 
     return await this.commandBus.execute(
-      new CreateProductCommand(name, sku, price, file),
+      new CreateProductCommand(name, sku, price, image),
     );
   }
 

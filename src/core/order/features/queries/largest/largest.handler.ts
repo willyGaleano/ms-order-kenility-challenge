@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PipelineStage } from 'mongoose';
 import { GetLargestOrderQuery } from './largest.query';
-import { OrderDetail } from '../../../models/entities/order-detail.entity';
 import { OrderQueryRepository } from '../../../repositories/order-query.repository';
+import { OrderDetailDBResponse } from '../../../models/dtos/detail-order.dto';
 
 @QueryHandler(GetLargestOrderQuery)
 export class GetLargestOrderHandler
@@ -10,7 +10,7 @@ export class GetLargestOrderHandler
 {
   constructor(private readonly orderRepository: OrderQueryRepository) {}
 
-  async execute(): Promise<OrderDetail> {
+  async execute(): Promise<OrderDetailDBResponse> {
     const pipeline: PipelineStage[] = [
       { $sort: { total: -1 } },
       { $limit: 1 },
@@ -34,6 +34,8 @@ export class GetLargestOrderHandler
             sku: 1,
             imageUrl: 1,
             price: 1,
+            createdAt: 1,
+            updatedAt: 1,
           },
           createdAt: 1,
           updatedAt: 1,
@@ -41,7 +43,8 @@ export class GetLargestOrderHandler
       },
     ];
 
-    const result = await this.orderRepository.aggregate<OrderDetail>(pipeline);
+    const result =
+      await this.orderRepository.aggregate<OrderDetailDBResponse>(pipeline);
     return result[0];
   }
 }

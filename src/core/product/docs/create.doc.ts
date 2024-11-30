@@ -1,4 +1,4 @@
-export const CREATE_PRODUCT_TAGS = 'Product';
+import { CreateProductResponse } from '../models/dtos/create-product.dto';
 
 export const CREATE_PRODUCT_OPERATION = {
   summary: 'Create a new product',
@@ -14,7 +14,7 @@ export const CREATE_PRODUCT_BODY = {
       name: { type: 'string', minLength: 3, maxLength: 50 },
       sku: { type: 'string', minLength: 3, maxLength: 20 },
       price: { type: 'number', minimum: 0 },
-      file: {
+      image: {
         type: 'string',
         format: 'binary',
       },
@@ -25,13 +25,7 @@ export const CREATE_PRODUCT_BODY = {
 export const CREATE_PRODUCT_RESPONSE_SUCCESS = {
   status: 201,
   description: 'The product has been successfully created.',
-  schema: {
-    example: {
-      data: {
-        productId: '60c72b2f9b1d4c3a4c8e4d3b',
-      },
-    },
-  },
+  type: CreateProductResponse,
 };
 
 export const CREATE_PRODUCT_RESPONSE_ERROR = {
