@@ -25,7 +25,8 @@ LOGGER_MESSAGE_KEY=msg
 # Database
 MONGODB_PORT=27017
 MONGO_INITDB_DATABASE=kenility
-MONGODB_URI=mongodb://localhost:27017/kenility
+MONGODB_URI=mongodb://orderdb:27017/kenility
+MONGODB_URI_LOCAL=mongodb://localhost:27017/kenility
 
 # AWS
 AWS_ACCESS_KEY_ID=your_aws_access_key_id

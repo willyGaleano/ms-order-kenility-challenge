@@ -10,7 +10,7 @@ import {
 } from '../../../../../core/product/models/schemas/product.schema';
 import { OrderStatus } from '../../../../../core/order/models/enums/order.enum';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI_LOCAL;
 
 const Product = mongoose.model<ProductDocument>('Product', ProductSchema);
 const Order = mongoose.model<OrderDocument>('Order', OrderSchema);
