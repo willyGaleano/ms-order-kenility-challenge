@@ -49,6 +49,12 @@ Lifting containers
   docker-compose up -d
 ```
 
+Seed DB
+
+```bash
+  npm run seed
+```
+
 ## User Admin
 
 For practical purposes we will work with a fixed user that will allow us to log in and generate a valid token.
