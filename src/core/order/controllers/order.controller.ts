@@ -61,7 +61,7 @@ import { JwtAuthGuard } from '../../auth/guards/jwt.auth.guard';
 @ApiTags('Order')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('order')
+@Controller('orders')
 export class OrderController {
   constructor(
     private readonly commandBus: CommandBus,
