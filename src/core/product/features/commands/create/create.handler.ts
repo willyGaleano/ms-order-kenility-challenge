@@ -4,7 +4,7 @@ import {
   CreateProductDto,
   ProductCreated,
 } from '../../../models/dtos/create-product.dto';
-import { ProductErrorCode } from '../../../models/enums/error-code.enum';
+import { ProductErrorType } from '../../../models/enums/error-code.enum';
 import { ProductCommandRepository } from '../../../repositories/product-command.repository';
 import { UploadFileService } from '../../../../../shared/file/services/upload-file.service';
 import { ProductQueryRepository } from '../../../repositories/product-query.repository';
@@ -25,7 +25,7 @@ export class CreateProductHandler
 
     const exists = await this.productQueryRepository.exists({ name });
     if (exists)
-      throw new ConflictException(ProductErrorCode.PRODUCT_ALREADY_EXISTS);
+      throw new ConflictException(ProductErrorType.PRODUCT_ALREADY_EXISTS);
 
     const { url } = await this.uploadService.upload(command.file, 'products');
 

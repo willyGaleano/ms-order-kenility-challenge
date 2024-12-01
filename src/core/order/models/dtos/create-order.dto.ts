@@ -11,6 +11,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Types } from 'mongoose';
 import { ControllerResponse } from '../../../../shared/models/wrappers/response.wrapper';
 
 export class ProductCreateOrder {
@@ -57,7 +58,7 @@ export class CreateOrderRequest {
 export class CreateOrderDto {
   customerName: string;
   total: number;
-  products: string[];
+  products: Types.ObjectId[];
 }
 
 export class OrderCreated {

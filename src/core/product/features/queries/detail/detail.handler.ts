@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { ProductDetailQuery } from './detail.query';
 import { ProductQueryRepository } from '../../../repositories/product-query.repository';
-import { ProductErrorCode } from '../../../models/enums/error-code.enum';
+import { ProductErrorType } from '../../../models/enums/error-code.enum';
 import { ProductDetailDBResponse } from '../../../models/dtos/detail-product.dto';
 
 @QueryHandler(ProductDetailQuery)
@@ -40,7 +40,7 @@ export class ProductDetailHandler implements IQueryHandler<ProductDetailQuery> {
       );
 
     if (!product)
-      throw new NotFoundException(ProductErrorCode.PRODUCT_NOT_FOUND);
+      throw new NotFoundException(ProductErrorType.PRODUCT_NOT_FOUND);
 
     this.logger.debug({
       msg: 'Query executed',

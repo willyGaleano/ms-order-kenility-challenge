@@ -10,8 +10,8 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { ControllerResponse } from '../models/wrappers/response.wrapper';
 import { ErrorResponse } from '../models/types/error-response.type';
 import {
-  GlobalMessageError,
-  isGlobalErrorCode,
+  ControlledMessageError,
+  isControlledErrorType,
 } from './errors/global-message.error';
 
 @Catch()
@@ -23,41 +23,37 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
-    const exceptionBody = exception.getResponse();
-    this.logger.debug({
-      msg: 'Handling exception',
-      data: {
-        exceptionBody,
-      },
-    });
+    const bodyErrorResponse = exception.getResponse();
+    const bodyRequest = ctx.getRequest().body;
 
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const userErrorCode = isGlobalErrorCode(exception.message)
+    const controlledErrorType = isControlledErrorType(exception.message)
       ? exception.message
       : null;
 
-    const errorResponse: ErrorResponse = userErrorCode
+    const errorResponse: ErrorResponse = controlledErrorType
       ? {
-          code: userErrorCode,
-          message: GlobalMessageError[userErrorCode],
+          type: controlledErrorType,
+          message: ControlledMessageError[controlledErrorType],
         }
       : {
-          code: 'CODE_NOT_CONFIGURED',
+          type: 'NOT_CONTROLLED_ERROR',
           message: exception.message,
+          bodyResponse: bodyErrorResponse,
         };
 
     this.logger.error({
       msg: errorResponse.message,
-      data: {
-        status,
-        bodyRequest: ctx.getRequest().body,
-      },
       cause: {
         ...errorResponse,
+      },
+      data: {
+        status,
+        bodyRequest,
       },
     });
 

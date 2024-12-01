@@ -1,4 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Types } from 'mongoose';
 import { CreateOrderCommand } from './create.command';
 import {
   CreateOrderDto,
@@ -17,7 +18,7 @@ export class CreateOrderHandler implements ICommandHandler<CreateOrderCommand> {
     const order: CreateOrderDto = {
       ...command,
       total,
-      products: products.map((product) => product.id),
+      products: products.map((product) => new Types.ObjectId(product.id)),
     };
 
     const orderId = await this.orderRepository.create(order);

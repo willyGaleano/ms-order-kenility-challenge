@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { LoginCommand } from './login.command';
 import { AuthService } from '../../../services/auth.service';
 import { LoggedUser } from '../../../models/dtos/login.dto';
-import { AuthErrorCode } from '../../../models/enums/auth-error-code.enum';
+import { AuthErrorType } from '../../../models/enums/auth-error-code.enum';
 import { getUserAdminByEmail } from '../../../utils/user-admin.util';
 
 @CommandHandler(LoginCommand)
@@ -15,7 +15,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     const user = getUserAdminByEmail(email);
 
     if (!user || user.password !== password)
-      throw new Error(AuthErrorCode.INVALID_CREDENTIALS);
+      throw new Error(AuthErrorType.INVALID_CREDENTIALS);
 
     const userId = user.id;
 

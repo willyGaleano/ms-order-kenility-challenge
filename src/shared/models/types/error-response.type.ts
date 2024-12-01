@@ -1,4 +1,5 @@
 export type ErrorResponse = {
+  type: string;
   message: string;
-  code: string;
+  bodyResponse?: string | object;
 };

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Model, Types } from 'mongoose';
 import { OrderStatus } from '../enums/order.enum';
 
-@Schema({ timestamps: true })
+@Schema({ collection: 'orders', timestamps: true })
 export class Order extends Document {
   @Prop({ required: true, maxlength: 100 })
   customerName: string;

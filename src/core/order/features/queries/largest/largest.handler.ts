@@ -45,6 +45,7 @@ export class GetLargestOrderHandler
 
     const result =
       await this.orderRepository.aggregate<OrderDetailDBResponse>(pipeline);
+
     return result[0];
   }
 }

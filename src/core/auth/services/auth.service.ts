@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthErrorCode } from '../models/enums/auth-error-code.enum';
+import { AuthErrorType } from '../models/enums/auth-error-code.enum';
 import { AuthJwtPayload, UserRequest } from '../models/types/auth.type';
 import { getUserAdminById } from '../utils/user-admin.util';
 
@@ -11,7 +11,7 @@ export class AuthService {
   async validateJwtUser(userId: string): Promise<UserRequest> {
     const user = getUserAdminById(userId);
 
-    if (!user) throw new UnauthorizedException(AuthErrorCode.USER_NOT_FOUND);
+    if (!user) throw new UnauthorizedException(AuthErrorType.USER_NOT_FOUND);
 
     return { id: user.id };
   }
